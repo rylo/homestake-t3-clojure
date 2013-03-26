@@ -5,14 +5,10 @@
     :extends org.homestake.response.ServerResponse
     :methods [[headerValues [] java.util.HashMap]]
     :exposes-methods {response responseSuper
-                      setResponseBody setResponseBodySuper
-                      HTMLWrap HTMLWrapSuper}))
+                      setResponseBody setResponseBodySuper}))
 
 (defn setResponseBody [this body]
   (.setResponseBodySuper this body))
-    
-(defn HTMLWrap [this text]
-  (.HTMLWrapSuper this text))
   
 (defn response [this request]
   (.responseSuper this request))

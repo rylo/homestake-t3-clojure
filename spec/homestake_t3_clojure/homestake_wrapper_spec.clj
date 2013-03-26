@@ -3,8 +3,6 @@
             [homestake-t3-clojure.homestake-wrapper :refer :all]))
 
 (describe "homestake-wrapper"
-  (it "wraps HTML, accessing the superclass' methods"
-    (should= "<html><body>LOL</body></html>" (.HTMLWrap (homestake-t3-clojure.homestake-wrapper.) "LOL")))
   (it "returns header values"
     (should= {"status" 200, "content-length" 500, "content-type" "text/html"} 
       (.headerValues (homestake-t3-clojure.homestake-wrapper.))))
@@ -16,3 +14,5 @@
           "1-default-header")))
   (it "sets the response body"
     (should= nil (.setResponseBody (homestake-t3-clojure.homestake-wrapper.) "LOL"))))
+
+(run-specs)
