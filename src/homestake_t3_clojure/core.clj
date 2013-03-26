@@ -1,10 +1,12 @@
 (ns homestake-t3-clojure.core
   (:import (org.homestake Homestake))
   (:gen-class)
-  (:require [tictactoe.board :as board]
-            [homestake-server :as server]))
+  (:require [tictactoe.board :as board]))
 
 (defn -main []
-  (println "Hello, World!")
-  (server.)
-  (board/make-board 9 "O HI DERE"))
+  (println "Homestake Tic-Tac-Toe server starting...")
+  (let [homestake (Homestake.)]
+    (doto 
+      homestake
+        (.startServer))
+    (board/make-board 9 "O HI DERE")))

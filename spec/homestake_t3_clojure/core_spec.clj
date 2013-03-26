@@ -1,3 +1,3 @@
-(ns tictactoe.game-rules-spec
+(ns homestake-t3-clojure.core-spec
   (:require [speclj.core :refer :all]
             [homestake-t3-clojure.core :refer :all]))
