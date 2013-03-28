@@ -5,7 +5,7 @@ Created as part of my residency at 8th Light.
 
 ## Usage
 
-lein compile
+lein run
 
 ## License
 
