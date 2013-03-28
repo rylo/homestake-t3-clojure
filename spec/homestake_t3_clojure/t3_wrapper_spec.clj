@@ -19,10 +19,10 @@
       (java.lang.String. (process-request requested-move [almost-won-board players]))
       (.contains "Player x wins!"))))
   (it "formats a board into HTML"
-    (should= (format "<div>%s</div>" (apply str (repeat 9 "<div></div>"))) (render-board empty-board)))
+    (should= "<div id='board'><div id='0'></div><div id='1'></div><div id='2'></div><div id='3'></div><div id='4'></div><div id='5'></div><div id='6'></div><div id='7'></div><div id='8'></div></div>" (render-board empty-board)))
   (it "formats a space into HTML"
-    (should= "<div>TESTING!</div>" (render-space "TESTING!"))
-    (should= "<div></div>" (render-space nil)))
+    (should= "<div id='1'>TESTING!</div>" (render-space 1 "TESTING!"))
+    (should= "<div id='1'></div>" (render-space 1 nil)))
   (it "renders the configuration page"
     (should (string? (render-config-page)))))
 

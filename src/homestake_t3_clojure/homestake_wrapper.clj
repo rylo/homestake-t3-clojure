@@ -42,7 +42,6 @@
       (processed-request (.queryStrings request)) 
       (processed-game (.queryStrings request))))
       (catch Exception exception
-        (.printStackTrace exception)
         "Internal server error")))
 
 (defn -response [this request]
