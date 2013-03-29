@@ -30,17 +30,17 @@
   (let [space-numbers (range 0 9)]
     (map #(nil-converter (.get querystring-hashtable (str %))) space-numbers)))
     
-(defn processed-request [request]
+(defn build-request [request]
   (get-requested-move request))
 
-(defn processed-game [request]
+(defn build-game [request]
   [(get-board request) (get-player-list request)])
 
 (defn generate-response-body [this request]
   (try 
     (str (homestake-t3-clojure.t3-wrapper/process-request 
-      (processed-request (.queryStrings request)) 
-      (processed-game (.queryStrings request))))
+      (build-request (.queryStrings request)) 
+      (build-game (.queryStrings request))))
       (catch Exception exception
         "Internal server error")))
 

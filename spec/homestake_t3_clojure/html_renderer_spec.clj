@@ -30,7 +30,7 @@
     (should= "<div id='board'><div id='0'></div><div id='1'></div><div id='2'></div><div id='3'></div><div id='4'></div><div id='5'></div><div id='6'></div><div id='7'></div><div id='8'></div></div>" (render-board empty-board)))
 
   (it "formats a space into HTML"
-    (should= "<div id='1'>TESTING!</div>" (render-space 1 "TESTING!"))
+    (should= "<div id='1' class='TESTING!'>TESTING!</div>" (render-space 1 "TESTING!"))
     (should= "<div id='1'></div>" (render-space 1 nil)))
   
   (it "renders the configuration page"
@@ -41,6 +41,9 @@
     (should (-contains? new-game-link #"New Game")))
     
   (it "renders the configuration page"
-    (should= 1 (count (distinct (map #(-contains? render-config-page %) fields))))))
+    (should= 1 (count (distinct (map #(-contains? render-config-page %) fields)))))
+    
+  (it "renders a message box"
+      (should= "<div class='message'>TEST</div>" (render-message-box "TEST"))))
     
 (run-specs)
