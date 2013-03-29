@@ -1,7 +1,7 @@
 (ns homestake-t3-clojure.core
-  (:import (org.homestake Homestake))
-  (:require [homestake-t3-clojure.homestake-wrapper :refer :all]
-            [tictactoe.game :as game]
+  (:import (org.homestake Homestake)
+           (homestake_t3_clojure HomestakeWrapper))
+  (:require [tictactoe.game :as game]
             [tictactoe.board :as board]))
 
 (defn -main []
@@ -9,5 +9,5 @@
   (let [homestake (Homestake.)]
     (doto 
       homestake
-        (.registerRoute "/" (homestake-t3-clojure.homestake-wrapper.))
+        (.registerRoute "/" (HomestakeWrapper.))
         (.startServer))))

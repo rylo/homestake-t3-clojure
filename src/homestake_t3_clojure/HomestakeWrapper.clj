@@ -1,8 +1,7 @@
-(ns homestake-t3-clojure.homestake-wrapper
+(ns homestake-t3-clojure.HomestakeWrapper
   (:import (org.homestake.response.ServerResponse))
   (:require [homestake-t3-clojure.t3-wrapper :refer :all])
   (:gen-class
-    :name homestake-t3-clojure.homestake-wrapper
     :extends org.homestake.response.ServerResponse
     :exposes-methods {response responseSuper
                       setResponseBody setResponseBodySuper}))

@@ -7,5 +7,6 @@
   :profiles {:dev {:dependencies [[speclj "2.5.0"]]}}
   :plugins [[speclj "2.5.0"]]
   :test-paths ["spec/"]
+  :aot [homestake-t3-clojure.HomestakeWrapper]
   :main homestake-t3-clojure.core)
   
