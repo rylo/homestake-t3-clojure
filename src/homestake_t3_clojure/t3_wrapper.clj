@@ -1,6 +1,6 @@
 (ns homestake-t3-clojure.t3-wrapper
   (:require
-    [homestake-t3-clojure.html-renderer :as renderer]
+    [homestake-t3-clojure.json-renderer :as renderer]
     [tictactoe.game :as game]
     [tictactoe.board :as board]
     [tictactoe.player :as player]

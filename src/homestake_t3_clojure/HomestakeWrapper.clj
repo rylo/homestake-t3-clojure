@@ -2,15 +2,15 @@
   (:import (org.homestake.response.ServerResponse))
   (:require [homestake-t3-clojure.t3-wrapper :refer :all])
   (:gen-class
-    :extends org.homestake.response.ServerResponse
+    :extends org.homestake.response.JSONResponse
     :exposes-methods {response responseSuper
                       setResponseBody setResponseBodySuper}))
 
 (defn -setResponseBody [this body]
   (.setResponseBodySuper this body))
 
-(defn -headerValues [this]
-  (java.util.HashMap. {"status" (int 200), "content-type" "text/html"}))
+; (defn -headerValues [this]
+;   (java.util.HashMap. {"status" (int 200), "content-type" "text/html"}))
 
 (defn nil-converter [value]
   (if (= "nil" value)
@@ -40,8 +40,8 @@
     (str (homestake-t3-clojure.t3-wrapper/process-request 
       (build-request (.queryStrings request)) 
       (build-game (.queryStrings request))))
-      (catch Exception exception
-        "Internal server error")))
+    (catch Exception exception
+      "Internal server error")))
 
 (defn -response [this request]
   (let [response-body (generate-response-body this request)]

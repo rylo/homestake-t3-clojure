@@ -34,9 +34,9 @@
     (should (-contains?
       (process-request requested-move [almost-won-board players]) "Player x wins!"))
     (should (-contains?
-      (process-request requested-move [empty-board players]) "<div id='board'>"))
+      (process-request requested-move [empty-board players]) "'board'"))
     (should (-contains?
-      (process-request requested-move [almost-won-board players]) "<div id='3' class='x'>x</div><div id='4' class='x'>x</div>")))
+      (process-request requested-move [almost-won-board players]) "'x', 'x'")))
   
   (it "returns a player with a given marker"
     (should= (last players) (get-player-by-marker players "x"))
