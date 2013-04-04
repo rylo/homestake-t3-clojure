@@ -1,5 +1,6 @@
 (ns homestake-t3-clojure.core
   (:import (org.homestake Homestake)
+           (org.homestake.response FileResponse)
            (homestake_t3_clojure HomestakeWrapper))
   (:require [tictactoe.game :as game]
             [tictactoe.board :as board]))
@@ -9,5 +10,6 @@
   (let [homestake (Homestake.)]
     (doto 
       homestake
-        (.registerRoute "/" (HomestakeWrapper.))
+        (.registerRoute "/json/" (HomestakeWrapper.))
+        (.registerRoute "/" (FileResponse. "/Users/rylan/Documents/Apprenticeship/homestake-t3-clojure/public/" "game.html"))
         (.startServer))))
