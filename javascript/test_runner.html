@@ -8,18 +8,29 @@
   <script src="http://code.jquery.com/jquery.min.js"></script>
   <script src="lib/jasmine-1.3.1/jasmine.js"></script>
   <script src="lib/jasmine-1.3.1/jasmine-html.js"></script>
+  
+  <script src="lib/underscore.js"></script>
+  <script src="lib/backbone.js"></script>
 
   <!-- include source files here... -->
-  <script src="src/model.js"></script>
-  <script src="src/lol.js"></script>
+  <script src="src/board.js"></script>
+  <script src="src/game.js"></script>
 
   <!-- include spec files here... -->
+  <script src="spec/boardSpec.js"></script>
   <script src="spec/gameSpec.js"></script>
 
 </head>
 
 <body>
   <script type="text/javascript">
+    
+    // var refresher = self.setInterval(function(){refreshPage(true)},5000);
+    
+    function refreshPage() {
+      location.reload();
+    }
+    
     (function() {
       var jasmineEnv = jasmine.getEnv();
       jasmineEnv.updateInterval = 1000;

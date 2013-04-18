@@ -1,8 +1,32 @@
 <html>
   <head>
     <title>Homestake Tic-tac-toe</title>
+    
+    <link rel="stylesheet" href="styles/base.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  
+    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+    <script type="text/javascript" src="javascript/underscore.js"></script>
+    <script type="text/javascript" src="javascript/backbone.js"></script>
+    
+    <script type="text/javascript" src="javascript/board.js"></script>
+    <script type="text/javascript" src="javascript/game.js"></script>
+
+    <script>
+      
+      $(document).ready(function() {
+        board = new Board();
+        view = new BoardView({
+          model: board
+        });
+        
+        view.render();
+      });
+      
+    </script>
+
   </head>
   <body>
-    Welcome to Tic-tac-toe!
+    <h1>Welcome to Tic-tac-toe!</h1>
+    <div id="board"></div>
   </body>
 </html>

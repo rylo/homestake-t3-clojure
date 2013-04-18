@@ -1,11 +1,17 @@
 # homestake-t3-clojure
 
-A Clojure library designed to combine the functionality of my Clojure tic-tac-toe application and Java HTTP server.
+A Clojure library designed to combine the functionality of my Clojure tic-tac-toe application and my Java HTTP server.
 Created as part of my residency at 8th Light.
 
 ## Usage
 
-lein run
+* Start the server
+      
+        lein run
+
+* Watch and compile CoffeeScript files:
+
+        coffee --watch --compile javascript/spec/*.coffee & coffee --watch --compile javascript/src/*.coffee
 
 ## License
 
