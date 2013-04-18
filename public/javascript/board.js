@@ -23,24 +23,20 @@
       };
 
       Board.prototype.fetch = function() {
-        return this.parse($.ajax('/json/', {
+        return this.parse($.ajax('http://localhost:5000/json/', {
           type: 'GET',
           dataType: 'html',
           error: function(jqXHR, textStatus, errorThrown) {
             return "error";
           },
           success: function(data, textStatus, jqXHR) {
-            console.log($.parseJSON(data));
-            console.log(data);
-            
-            return data;
+            return data.board;
           }
         }));
       };
 
       Board.prototype.parse = function(response) {
-        console.log("HULLO?");
-        return response.responseText;
+        return response.board;
       };
 
       Board.prototype.url = function() {

@@ -11,7 +11,7 @@ Created as part of my residency at 8th Light.
 
 * Watch and compile CoffeeScript files:
 
-        coffee --watch --compile javascript/spec/*.coffee & coffee --watch --compile javascript/src/*.coffee
+        coffee --output public/javascript --watch --compile javascript/spec/*.coffee & coffee --output public/javascript --watch --compile javascript/src/*.coffee
 
 ## License
 
