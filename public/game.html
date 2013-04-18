@@ -14,9 +14,9 @@
     <script>
       
       $(document).ready(function() {
-        board = new Board();
-        view = new BoardView({
-          model: board
+        game = new Game();
+        view = new GameView({
+          model: game
         });
         
         view.render();
