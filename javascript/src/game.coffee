@@ -1,47 +1,42 @@
 class window.Game extends Backbone.Model
-  url: -> '/json/'
+  url: -> '/json'
   
   defaults:
     board: new Board
-    players: { player1: 'x', player2: 'o' }
-    currentPlayer: { player1: 'x' }
+    players: { player1: {type: 'human', marker: 'x'}, player2: {type: 'easy', marker: 'o'} }
+    currentPlayer: 'x'
     
-  sync: () ->
+  sync: ->
     url = this.url()
-    $.ajax url, ->
-        type: 'GET'
-        dataType: 'html'
-        error: (jqXHR, textStatus, errorThrown) ->
-          "error"
-        success: (data, textStatus, jqXHR) ->            
-          this.parse(data)
-          
+    dataHash = this.dataHash()
+    $.ajax url,
+      data: dataHash 
+      error: (jqXHR, textStatus, errorThrown) =>
+        "error"
+      success: (data, textStatus, jqXHR) =>
+        this.parse(data)
+        
+  dataHash: ->
+    $.extend { 
+      move: 'first-move', 
+      marker: this.get('currentPlayer'), 
+      player1 : this.get('players').player1, 
+      player1type: 'human', 
+      player2 : this.get('players').player2, 
+      player2type: 'easy'
+    }, this.boardHash()
+    
+  boardHash: ->
+    hash = for space_number, value of this.get('board').get('spaces')
+      "\"#{space_number}\":\"#{value}\""
+    $.parseJSON "{#{hash}}"
+    
   parse: (data) ->
     json = JSON.parse data.responseText
     this.get('board').set('spaces', this.parseBoard(json.board))
-    this.set('currentPlayer', json.currentPlayer)
-    this.set('players', { player1: json.player1, player2: json.player2 })
+    this.set('currentPlayer', json.marker)
+    this.set('players', { player1: {marker: json.player1.marker, type: json.player1.type}, player2: {marker: json.player2.marker, type: json.player2.type} })
     
   parseBoard: (board_array) ->
     board = for space_number, value of board_array
       if value == 'nil' then null else value
-
-
-class window.GameView extends Backbone.View
-  el: '#board'
-  
-  renderBoard: =>
-    spaces = for space_number, value of @model.get('board').get('spaces')
-      "<div id=\"#{space_number}\" class=\"space\">#{value}</div>"
-  
-  render: ->
-    html = this.renderBoard()
-    $(this.el).html(html)
-    
-  makeMove: (event) ->
-    space_index = event.target.id
-    player_marker = @model.get('currentPlayer')
-    @model.get('board').setSpace(space_index, player_marker)
-    this.render()
-
-  events: 'click .space' : 'makeMove'

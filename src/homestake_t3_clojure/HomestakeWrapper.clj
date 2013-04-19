@@ -13,7 +13,7 @@
 ;   (java.util.HashMap. {"status" (int 200), "content-type" "text/html"}))
 
 (defn nil-converter [value]
-  (if (= "nil" value)
+  (if (or (= "nil" value) (= "null" value))
     nil
     value))
 
@@ -37,10 +37,11 @@
 
 (defn generate-response-body [this request]
   (try 
-    (str (homestake-t3-clojure.t3-wrapper/process-request 
+    (str (homestake-t3-clojure.t3-wrapper/process-request
       (build-request (.queryStrings request)) 
       (build-game (.queryStrings request))))
     (catch Exception exception
+      (.printStackTrace exception)
       "Internal server error")))
 
 (defn -response [this request]

@@ -13,6 +13,7 @@
   (last request))
   
 (defn get-player-by-marker [player-list marker]
+  (println player-list)
   (let [first-player (first player-list)
         second-player (last player-list)]
     (if (= marker (:marker first-player))

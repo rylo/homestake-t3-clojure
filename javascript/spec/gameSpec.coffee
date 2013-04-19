@@ -5,11 +5,11 @@ describe 'Game', ->
       newBoard: {
         success: {
           status: 200,
-          responseText: '{"currentPlayer" : "x", "currentMove" : "first-move", "player1": {"type":"human", "marker":"x"}, "player2": {"type":"human", "marker":"o"}, "board":["nil", "nil", "nil", "nil", "nil", "nil", "nil", "nil", "nil"], "message": ""}'
+          responseText: '{"marker" : "x", "move" : "first-move", "player1": {"type":"human", "marker":"x"}, "player2": {"type":"human", "marker":"o"}, "board":["nil", "nil", "nil", "nil", "nil", "nil", "nil", "nil", "nil"], "message": ""}'
         }       
       }
     }
-  
+          
   beforeEach ->
     game = new Game
     spy = spyOn($, "ajax").andCallFake ->
@@ -20,11 +20,11 @@ describe 'Game', ->
     
   it 'has a board, players and a current player', ->
     expect(game.get('board')).toToBeDefined
-    expect(game.get('players')).toEqual { player1: 'x', player2: 'o' }
-    expect(game.get('currentPlayer')).toEqual { player1: 'x' }
+    expect(game.get('players')).toEqual { player1: {type: 'human', marker: 'x'}, player2: {type: 'easy', marker: 'o'} }
+    expect(game.get('currentPlayer')).toEqual 'x'
         
   it 'has a default url', ->
-    expect(game.url()).toEqual '/json/'
+    expect(game.url()).toEqual '/json'
     
   it 'parses the hash returned from the server', ->
     response = JSON.parse mockResponse.newBoard.success.responseText    
@@ -33,22 +33,9 @@ describe 'Game', ->
     expect( game.get('board').get('spaces') ).toEqual [null, null, null, null, null, null, null, null, null]
     expect( game.get('currentPlayer') ).toEqual 'x'
     expect( game.get('players') ).toEqual {player1: response.player1, player2: response.player2}
-    
-    
-describe 'GameView', ->
-  gameView = null
+  
+  it 'returns a hash of the object\'s data', ->
+    expect( game.dataHash() ).toEqual { 0 : 'null', 1 : 'null', 2 : 'null', 3 : 'null', 4 : 'null', 5 : 'null', 6 : 'null', 7 : 'null', 8 : 'null', move : 'first-move', marker : 'x', player1 : { type : 'human', marker : 'x' }, player1type : 'human', player2 : { type : 'easy', marker : 'o' }, player2type : 'easy' }
 
-  beforeEach ->
-    game = new Game
-    gameView = new GameView(model: game)
-
-  it 'constructs a Board object', ->
-    expect(gameView).not.toBe(null)
-
-  it 'renders all of a board\'s spaces', ->
-    expect(gameView.renderBoard()).toContain '<div id=\"0\" class=\"space\">null</div>'
-    expect(gameView.renderBoard().length).toEqual 9
-    
-  it 'makes a move on and re-renders the board', ->
-    gameView.makeMove({ target : 1 })
-    expect( Game.render ).toHaveBeenCalled
+  it 'returns a hash representation of the board', ->
+    expect( game.boardHash() ).toEqual { 0 : 'null', 1 : 'null', 2 : 'null', 3 : 'null', 4 : 'null', 5 : 'null', 6 : 'null', 7 : 'null', 8 : 'null' }

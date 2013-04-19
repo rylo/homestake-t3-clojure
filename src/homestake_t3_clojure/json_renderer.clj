@@ -34,8 +34,8 @@
     \"currentMove\" : \"first-move\",
     \"player1\": {\"type\":\"human\", \"marker\":\"x\"},
     \"player2\": {\"type\":\"human\", \"marker\":\"o\"},"
-    (render-board board)
-    "\"message\": \""(game/get-ending-message board)"\"
+    (render-board board)",
+    \"message\": \""(game/get-ending-message board)"\"
   }"))
 
 (defn render-current-game [board player-list current-player]
@@ -44,6 +44,6 @@
     \"currentMove\" : \"first-move\",
     \"player1\": {\"type\":\"human\", \"marker\":\"x\"},
     \"player2\": {\"type\":\"human\", \"marker\":\"o\"},"
-    (render-board board)
-    "\"message\": \""(render-player-turn-message current-player)"\"
+    (render-board board)",
+    \"message\": \""(render-player-turn-message current-player)"\"
   }"))

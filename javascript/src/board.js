@@ -26,10 +26,6 @@
       });
     };
 
-    Board.prototype.save = function() {
-      return console.log('lol');
-    };
-
     return Board;
 
   })(Backbone.Model);
