@@ -9,7 +9,20 @@
       newBoard: {
         success: {
           status: 200,
-          responseText: '{"marker" : "x", "move" : "first-move", "player1": {"type":"human", "marker":"x"}, "player2": {"type":"human", "marker":"o"}, "board":["nil", "nil", "nil", "nil", "nil", "nil", "nil", "nil", "nil"], "message": ""}'
+          responseText: {
+            marker: "x",
+            move: "first-move",
+            player1: {
+              type: "human",
+              marker: "x"
+            },
+            player2: {
+              type: "human",
+              marker: "o"
+            },
+            board: ["nil", "nil", "nil", "nil", "nil", "nil", "nil", "nil", "nil"],
+            message: ""
+          }
         }
       }
     };
@@ -21,7 +34,7 @@
         model: game
       });
       return spy = spyOn($, "ajax").andCallFake(function() {
-        return game.parse(mockResponse.newBoard.success);
+        return mockResponse.newBoard.success;
       });
     });
     it('constructs a Board object', function() {

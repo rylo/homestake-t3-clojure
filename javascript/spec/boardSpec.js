@@ -15,7 +15,9 @@
     });
     return it('sets a marker on a board with a given index', function() {
       board.setSpace(1, 'x');
-      return expect(board.get('spaces')).toEqual([null, 'x', null, null, null, null, null, null, null]);
+      expect(board.get('spaces')).toEqual([null, 'x', null, null, null, null, null, null, null]);
+      board.setSpace(1, null);
+      return expect(board.get('spaces')).toEqual([null, null, null, null, null, null, null, null, null]);
     });
   });
 

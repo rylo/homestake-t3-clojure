@@ -24,14 +24,16 @@
           marker: 'x'
         },
         player2: {
-          type: 'easy',
+          type: 'human',
           marker: 'o'
         }
       },
-      currentPlayer: 'x'
+      currentPlayer: 'x',
+      currentMove: 'first-move',
+      message: ''
     };
 
-    Game.prototype.sync = function() {
+    Game.prototype.sync = function(callback) {
       var dataHash, url,
         _this = this;
 
@@ -50,12 +52,12 @@
 
     Game.prototype.dataHash = function() {
       return $.extend({
-        move: 'first-move',
+        move: this.get('currentMove'),
         marker: this.get('currentPlayer'),
-        player1: this.get('players').player1,
-        player1type: 'human',
-        player2: this.get('players').player2,
-        player2type: 'easy'
+        player1: this.get('players').player1.marker,
+        player1type: this.get('players').player1.type,
+        player2: this.get('players').player2.marker,
+        player2type: this.get('players').player2.type
       }, this.boardHash());
     };
 
@@ -76,12 +78,12 @@
       return $.parseJSON("{" + hash + "}");
     };
 
-    Game.prototype.parse = function(data) {
+    Game.prototype.parse = function(data, callback) {
       var json;
 
-      json = JSON.parse(data.responseText);
+      json = data;
       this.get('board').set('spaces', this.parseBoard(json.board));
-      this.set('currentPlayer', json.marker);
+      this.set('currentPlayer', json.currentPlayer);
       return this.set('players', {
         player1: {
           marker: json.player1.marker,

@@ -15,6 +15,10 @@
 
     GameView.prototype.el = '#board';
 
+    GameView.prototype.initialize = function() {
+      return this.model.get('board').on('change', this.render, this);
+    };
+
     GameView.prototype.renderBoard = function() {
       var result, space_number, spaces, value;
 
@@ -44,8 +48,8 @@
       space_index = event.target.id;
       player_marker = this.model.get('currentPlayer');
       this.model.get('board').setSpace(space_index, player_marker);
-      this.model.fetch();
-      return this.render();
+      this.model.set('currentMove', space_index);
+      return this.model.sync();
     };
 
     GameView.prototype.events = {
