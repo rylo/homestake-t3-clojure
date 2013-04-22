@@ -10,8 +10,8 @@
 (def mock-new-game [empty-board [nil nil]])
 (def mock-current-game [almost-won-board players])
 
-(defn -contains? [string string-to-find]
-  (.contains (java.lang.String. string) string-to-find))
+(defn -contains? [string matcher]
+  (not (nil? (re-find matcher string))))
   
 (describe "t3-wrapper"
 
@@ -32,11 +32,11 @@
     
   (it "processes a request and returns the altered board"
     (should (-contains?
-      (process-request requested-move [almost-won-board players]) "Player x wins!"))
+      (process-request requested-move [almost-won-board players]) #"Player x wins!"))
     (should (-contains?
-      (process-request requested-move [empty-board players]) "'board'"))
+      (process-request requested-move [empty-board players]) #"board"))
     (should (-contains?
-      (process-request requested-move [almost-won-board players]) "'x', 'x'")))
+      (process-request requested-move [almost-won-board players]) #"\"x\", \"x\"")))
   
   (it "returns a player with a given marker"
     (should= (last players) (get-player-by-marker players "x"))

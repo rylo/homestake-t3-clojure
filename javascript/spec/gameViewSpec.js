@@ -41,14 +41,19 @@
       return expect(gameView).not.toBe(null);
     });
     it('renders all of a board\'s spaces', function() {
-      expect(gameView.renderBoard()).toContain('<div id=\"0\" class=\"space\">null</div>');
+      expect(gameView.renderBoard()).toContain('<div id=\"0\" class=\"space\"></div>');
       return expect(gameView.renderBoard().length).toEqual(9);
     });
-    return it('makes a move on and re-renders the board', function() {
+    it('makes a move on and re-renders the board', function() {
       gameView.makeMove({
         target: 1
       });
       return expect(Game.render).toHaveBeenCalled;
+    });
+    return it('renders a game message', function() {
+      expect(gameView.renderMessage()).toEqual('<h2>x\'s turn</h2>');
+      game.set('message', 'o hai dere');
+      return expect(gameView.renderMessage()).toEqual('<h2>o hai dere</h2>');
     });
   });
 

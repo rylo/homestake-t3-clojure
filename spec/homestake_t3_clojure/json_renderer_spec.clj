@@ -10,30 +10,30 @@
 
 (describe "json-renderer"
   (it "constructs a json board object"
-    (should= "'board':['nil', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil', 'nil']" (render-board empty-board)))
+    (should= "\"board\":[\"nil\", \"nil\", \"nil\", \"nil\", \"nil\", \"nil\", \"nil\", \"nil\", \"nil\"]" (render-board empty-board)))
   
   (it "returns a new json game object"
-    (should (-contains? (render-new-game empty-board player-list) #"board"))
-    (should (-contains? (render-new-game empty-board player-list) #"player1"))
-    (should (-contains? (render-new-game empty-board player-list) #"player2"))
-    (should (-contains? (render-new-game empty-board player-list) #"message"))
-    (should (-contains? (render-new-game empty-board player-list) #"currentMove"))
-    (should (-contains? (render-new-game empty-board player-list) #"currentPlayer")))
+    (let [new-game (render-new-game empty-board player-list)]  
+      (should (-contains? new-game #"board"))
+      (should (-contains? new-game #"player1"))
+      (should (-contains? new-game #"player2"))
+      (should (-contains? new-game #"message"))
+      (should (-contains? new-game #"currentPlayer"))))
     
   (it "returns a current json game object"
-    (should (-contains? (render-current-game empty-board [] []) #"board"))
-    (should (-contains? (render-current-game empty-board [] []) #"player1"))
-    (should (-contains? (render-current-game empty-board [] []) #"player2"))
-    (should (-contains? (render-current-game empty-board [] []) #"message"))
-    (should (-contains? (render-current-game empty-board [] []) #"currentMove"))
-    (should (-contains? (render-current-game empty-board [] []) #"currentPlayer")))
+    (let [current-game (render-current-game empty-board [] [])]  
+      (should (-contains? current-game #"board"))
+      (should (-contains? current-game #"player1"))
+      (should (-contains? current-game #"player2"))
+      (should (-contains? current-game #"message"))
+      (should (-contains? current-game #"currentPlayer"))))
 
   (it "returns a finished json game object"
-    (should (-contains? (render-finished-game empty-board) #"board"))
-    (should (-contains? (render-finished-game empty-board) #"player1"))
-    (should (-contains? (render-finished-game empty-board) #"player2"))
-    (should (-contains? (render-finished-game empty-board) #"message"))
-    (should (-contains? (render-finished-game empty-board) #"currentMove"))
-    (should (-contains? (render-finished-game empty-board) #"currentPlayer"))))
+    (let [finished-game (render-finished-game empty-board player-list)]
+      (should (-contains? finished-game #"board"))
+      (should (-contains? finished-game #"player1"))
+      (should (-contains? finished-game #"player2"))
+      (should (-contains? finished-game #"message"))
+      (should (-contains? finished-game #"currentPlayer")))))
 
 (run-specs)

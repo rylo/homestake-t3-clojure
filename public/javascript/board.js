@@ -16,14 +16,24 @@
       spaces: [null, null, null, null, null, null, null, null, null]
     };
 
-    Board.prototype.setSpace = function(space_index, player_marker) {
+    Board.prototype.setSpace = function(spaceIndex, playerMarker) {
       var spaces;
 
       spaces = this.get('spaces');
-      spaces[space_index] = player_marker;
+      if (this.spaceOpen(spaceIndex)) {
+        spaces[spaceIndex] = playerMarker;
+      }
       return this.set({
         spaces: spaces
       });
+    };
+
+    Board.prototype.spaceOpen = function(spaceIndex) {
+      return this.get('spaces')[spaceIndex] === null;
+    };
+
+    Board.prototype.clear = function() {
+      return this.set('spaces', [null, null, null, null, null, null, null, null, null]);
     };
 
     return Board;

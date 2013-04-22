@@ -19,27 +19,23 @@
     (apply str (map-indexed #(render-space %1 %2) board))))
 
 (defn render-new-game [board player-list]
-  (println "new board")
-  (println player-list)
   (str "{
     \"currentPlayer\" : \"x\",
-    \"currentMove\" : \"first-move\",
     \"player1\": {\"type\":\"" (class (first player-list)) "\", \"marker\":\"" (:marker (first player-list)) "\"},
     \"player2\": {\"type\":\"" (class (last player-list)) "\", \"marker\":\"" (:marker (last player-list)) "\"},
     "(render-board [nil nil nil nil nil nil nil nil nil])",
     \"message\": \"\"
   }"))
   
-(defn render-finished-game [board]
-  (println "finished board")
-  (str "{"
+(defn render-finished-game [board player-list]
+  (str "{
+    \"currentPlayer\" : \"x\",
+    \"player1\": {\"type\":\"" (class (first player-list)) "\", \"marker\":\"" (:marker (first player-list)) "\"},
+    \"player2\": {\"type\":\"" (class (last player-list)) "\", \"marker\":\"" (:marker (last player-list)) "\"},"
     (render-board board)",
     \"message\": \""(game/get-ending-message board)"\"}"))
 
 (defn render-current-game [board player-list current-player]
-  (println "current board")
-  (println "player list")
-  (println player-list)
   (str "{
     \"currentPlayer\" : \"" (:marker current-player) "\",
     \"player1\": {\"type\":\"" (class (first player-list)) "\", \"marker\":\"" (:marker (first player-list)) "\"},

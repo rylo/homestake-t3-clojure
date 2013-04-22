@@ -30,7 +30,7 @@
       },
       currentPlayer: 'x',
       currentMove: 'first-move',
-      message: ''
+      message: "x's turn"
     };
 
     Game.prototype.sync = function(callback) {
@@ -79,19 +79,17 @@
     };
 
     Game.prototype.parse = function(data, callback) {
-      var json;
-
-      json = data;
-      this.get('board').set('spaces', this.parseBoard(json.board));
-      this.set('currentPlayer', json.currentPlayer);
+      this.get('board').set('spaces', this.parseBoard(data.board));
+      this.set('currentPlayer', data.currentPlayer);
+      this.set('message', data.message);
       return this.set('players', {
         player1: {
-          marker: json.player1.marker,
-          type: json.player1.type
+          marker: data.player1.marker,
+          type: data.player1.type
         },
         player2: {
-          marker: json.player2.marker,
-          type: json.player2.type
+          marker: data.player2.marker,
+          type: data.player2.type
         }
       });
     };

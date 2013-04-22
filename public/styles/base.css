@@ -3,9 +3,11 @@
 }
 
 #board div {
-  background: red;
   border: 1px solid #ccc;
   float: left;
+  text-align: center;
+  font-size: 4em;
+  line-height: 100px;
   height: 100px;
   width: 100px;
 }

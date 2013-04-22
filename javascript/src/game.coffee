@@ -6,7 +6,7 @@ class window.Game extends Backbone.Model
     players : { player1: {type: 'human', marker: 'x'}, player2: {type: 'human', marker: 'o'} }
     currentPlayer : 'x'
     currentMove : 'first-move'
-    message: ''
+    message: "x's turn"
 
   sync: (callback) ->
     url = this.url()
@@ -19,7 +19,7 @@ class window.Game extends Backbone.Model
         this.parse(data)
         
   dataHash: ->
-    $.extend { 
+    $.extend {
       move: this.get('currentMove'),
       marker: this.get('currentPlayer'),
       player1 : this.get('players').player1.marker, 
@@ -34,10 +34,10 @@ class window.Game extends Backbone.Model
     $.parseJSON "{#{hash}}"
     
   parse: (data, callback) ->
-    json = data
-    this.get('board').set('spaces', this.parseBoard(json.board))
-    this.set('currentPlayer', json.currentPlayer)
-    this.set('players', { player1: { marker: json.player1.marker, type: json.player1.type}, player2: {marker: json.player2.marker, type: json.player2.type} })
+    this.get('board').set('spaces', this.parseBoard(data.board))
+    this.set('currentPlayer', data.currentPlayer)
+    this.set('message', data.message)
+    this.set('players', { player1: { marker: data.player1.marker, type: data.player1.type}, player2: {marker: data.player2.marker, type: data.player2.type} })
     
   parseBoard: (board_array) ->
     board = for space_number, value of board_array

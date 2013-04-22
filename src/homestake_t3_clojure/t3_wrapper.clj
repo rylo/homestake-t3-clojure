@@ -13,7 +13,6 @@
   (last request))
   
 (defn get-player-by-marker [player-list marker]
-  (println player-list)
   (let [first-player (first player-list)
         second-player (last player-list)]
     (if (= marker (:marker first-player))
@@ -65,7 +64,7 @@
       (renderer/render-current-game board player-list current-player)
         (let [altered-board (alter-board board requested-move current-player)]
       		(if (rules/game-over? altered-board) 
-          (renderer/render-finished-game altered-board)
+          (renderer/render-finished-game altered-board player-list)
             (if (player/is-human? other-player) 
             (renderer/render-current-game altered-board player-list other-player)
               (process-request ["_" (:marker other-player)] [altered-board (last game)]))))))))

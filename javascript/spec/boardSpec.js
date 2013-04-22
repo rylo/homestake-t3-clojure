@@ -5,7 +5,8 @@
 
     board = null;
     beforeEach(function() {
-      return board = new Board;
+      board = new Board;
+      return board.clear();
     });
     it('constructs a Board object', function() {
       return expect(board).not.toBe(null);
@@ -13,11 +14,14 @@
     it('has a spaces array, filled with nulls', function() {
       return expect(board.get('spaces')).toEqual([null, null, null, null, null, null, null, null, null]);
     });
-    return it('sets a marker on a board with a given index', function() {
+    it('sets a marker on a board with a given index', function() {
       board.setSpace(1, 'x');
       expect(board.get('spaces')).toEqual([null, 'x', null, null, null, null, null, null, null]);
-      board.setSpace(1, null);
+      board.clear();
       return expect(board.get('spaces')).toEqual([null, null, null, null, null, null, null, null, null]);
+    });
+    return it('checks to see if a space is open', function() {
+      return expect(board.spaceOpen(1)).toEqual(true);
     });
   });
 

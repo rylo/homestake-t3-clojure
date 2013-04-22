@@ -15,8 +15,15 @@
 
     GameView.prototype.el = '#board';
 
+    GameView.prototype.messageElement = '#message';
+
     GameView.prototype.initialize = function() {
-      return this.model.get('board').on('change', this.render, this);
+      return this.model.on('change', this.render, this);
+    };
+
+    GameView.prototype.render = function() {
+      $(this.el).html(this.renderBoard());
+      return $(this.messageElement).html(this.renderMessage());
     };
 
     GameView.prototype.renderBoard = function() {
@@ -29,27 +36,28 @@
         _results = [];
         for (space_number in spaces) {
           value = spaces[space_number];
+          if (value === null) {
+            value = '';
+          }
           _results.push("<div id=\"" + space_number + "\" class=\"space\">" + value + "</div>");
         }
         return _results;
       })();
     };
 
-    GameView.prototype.render = function() {
-      var html;
-
-      html = this.renderBoard();
-      return $(this.el).html(html);
+    GameView.prototype.renderMessage = function() {
+      return "<h2>" + (this.model.get('message')) + "</h2>";
     };
 
     GameView.prototype.makeMove = function(event) {
-      var player_marker, space_index;
+      var playerMarker, spaceIndex;
 
-      space_index = event.target.id;
-      player_marker = this.model.get('currentPlayer');
-      this.model.get('board').setSpace(space_index, player_marker);
-      this.model.set('currentMove', space_index);
-      return this.model.sync();
+      spaceIndex = event.target.id;
+      playerMarker = this.model.get('currentPlayer');
+      this.model.get('board').setSpace(spaceIndex, playerMarker);
+      this.model.set('currentMove', spaceIndex);
+      this.model.sync();
+      return this.render();
     };
 
     GameView.prototype.events = {
