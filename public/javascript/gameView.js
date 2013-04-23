@@ -21,9 +21,18 @@
       'click .space': 'makeMove'
     };
 
+    GameView.prototype.initialize = function() {
+      this.model.on('change', this.render, this);
+      return this.model.on('waiting notwaiting', this.toggleLoadIndicator, this);
+    };
+
     GameView.prototype.render = function() {
       $(this.el).html(this.renderBoard());
       return $(this.messageElement).html(this.renderMessage());
+    };
+
+    GameView.prototype.toggleLoadIndicator = function() {
+      return $('#loading').toggle();
     };
 
     GameView.prototype.renderBoard = function() {
@@ -60,10 +69,6 @@
         this.model.sync();
         return this.render();
       }
-    };
-
-    GameView.prototype.initialize = function() {
-      return this.model.on('change', this.render, this);
     };
 
     return GameView;

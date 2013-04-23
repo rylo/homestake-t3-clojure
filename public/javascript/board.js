@@ -12,9 +12,9 @@
       return _ref;
     }
 
-    Board.prototype.defaults = {
-      spaces: [null, null, null, null, null, null, null, null, null],
-      locked: false
+    Board.prototype.initialize = function() {
+      this.set('spaces', [null, null, null, null, null, null, null, null, null]);
+      return this.set('locked', true);
     };
 
     Board.prototype.setSpace = function(spaceIndex, playerMarker) {
@@ -36,12 +36,10 @@
     };
 
     Board.prototype.lock = function() {
-      $('#loading').fadeIn();
       return this.set('locked', true);
     };
 
     Board.prototype.unlock = function() {
-      $('#loading').fadeOut();
       return this.set('locked', false);
     };
 

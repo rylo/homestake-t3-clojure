@@ -16,7 +16,12 @@
     ConfigView.prototype.el = '#config';
 
     ConfigView.prototype.events = {
-      'change input:radio[name=type]': 'lerg'
+      'change input:radio[name=type]': 'updateConfiguration',
+      'click .new-game': 'newGame'
+    };
+
+    ConfigView.prototype.initialize = function() {
+      return this.render();
     };
 
     ConfigView.prototype.updateConfiguration = function(event) {
@@ -24,15 +29,41 @@
 
       player = event.target.parentElement.parentElement.className;
       type = event.target.value;
-      return console.log(type);
+      if (player === 'player1') {
+        return this.model.get('players').player1.type = type;
+      } else {
+        return this.model.get('players').player2.type = type;
+      }
     };
 
     ConfigView.prototype.render = function() {
       var data, html;
 
-      data = this.model.get('players');
-      html = "    <div class='player1'>      Player 1 <br />      <span class='player1marker'>" + data.player1.marker + "</span><br />      <form class='type'>        <input type='radio' name='type' value='human' checked='checked'>Human</input>        <input type='radio' name='type' value='easy'>Easy AI</input>        <input type='radio' name='type' value='ultimate'>Ultimate AI</input>      </form>    </div>        <div class='player2'>      Player 2 <br />      <span class='player2marker'>" + data.player2.marker + "</span><br />      <form class='type'>        <input type='radio' name='type' value='human' checked='checked'>Human</input>        <input type='radio' name='type' value='easy'>Easy AI</input>        <input type='radio' name='type' value='ultimate'>Ultimate AI</input>      </form>    </div>";
-      return $(this.el).html(html);
+      if (this.model.get('finished')) {
+        data = this.model.get('players');
+        html = "New Game      <div class='player1'>        Player 1 <br />        " + (this.renderOptions(data.player1.type, data.player1.marker)) + "      </div>        <div class='player2'>        Player 2 <br />        " + (this.renderOptions(data.player2.type, data.player2.marker)) + "      </div>      <div class='new-game'>Start</div>";
+        return $(this.el).html(html);
+      }
+    };
+
+    ConfigView.prototype.renderOptions = function(playerType, marker) {
+      return "<span class='player2marker'>" + marker + "</span><br />    <form class='type'>      <input type='radio' name='type' value='human'" + (this.isChecked(playerType, 'human')) + ">Human</input>      <input type='radio' name='type' value='easy'" + (this.isChecked(playerType, 'easy')) + ">Easy AI</input>      <input type='radio' name='type' value='ultimate'" + (this.isChecked(playerType, 'ultimate')) + ">Ultimate AI</input>    </form>";
+    };
+
+    ConfigView.prototype.isChecked = function(playerType, checkboxType) {
+      if (playerType === checkboxType) {
+        return " checked='checked'";
+      }
+    };
+
+    ConfigView.prototype.newGame = function() {
+      this.model.newGame();
+      this.model.get('board').unlock();
+      return $(this.el).html("");
+    };
+
+    ConfigView.prototype.initialize = function() {
+      return this.model.on('change', this.render, this);
     };
 
     return ConfigView;

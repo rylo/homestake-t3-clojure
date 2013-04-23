@@ -2,10 +2,17 @@ class window.GameView extends Backbone.View
   el: '#board'
   messageElement: '#message'
   events: 'click .space' : 'makeMove'
+
+  initialize: ->
+    @model.on('change', this.render, this)
+    @model.on('waiting notwaiting', this.toggleLoadIndicator, this)
   
   render: ->
     $(this.el).html this.renderBoard()
     $(this.messageElement).html this.renderMessage()
+  
+  toggleLoadIndicator: ->
+    $('#loading').toggle()
   
   renderBoard: =>
     spaces = @model.get('board').get('spaces')
@@ -25,6 +32,3 @@ class window.GameView extends Backbone.View
       board.setSpace(spaceIndex, @model.get('currentPlayer'))
       @model.sync()
       this.render()
-
-  initialize: ->
-    @model.on('change', this.render, this)

@@ -1,4 +1,5 @@
 describe 'ConfigView', ->
+
   configView = null
   game = null
 
@@ -8,3 +9,6 @@ describe 'ConfigView', ->
   
   it 'instantiates a ConfigView', ->
     expect( configView ).not.toBe(null)
+  
+  it 'has two events', ->
+    expect( configView.events ).toEqual 2

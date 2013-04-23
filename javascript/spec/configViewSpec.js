@@ -11,8 +11,11 @@
         model: game
       });
     });
-    return it('instantiates a ConfigView', function() {
+    it('instantiates a ConfigView', function() {
       return expect(configView).not.toBe(null);
+    });
+    return it('has two events', function() {
+      return expect(configView.events).toEqual(2);
     });
   });
 

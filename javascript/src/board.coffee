@@ -1,7 +1,8 @@
 class window.Board extends Backbone.Model
-  defaults:
-    spaces: [null, null, null, null, null, null, null, null, null]
-    locked: false
+    
+  initialize: ->
+    this.set('spaces', [null, null, null, null, null, null, null, null, null])
+    this.set('locked', true)
 
   setSpace: (spaceIndex, playerMarker) ->
     spaces = this.get('spaces')
@@ -10,14 +11,12 @@ class window.Board extends Backbone.Model
     
   spaceOpen: (spaceIndex) ->
     this.get('spaces')[spaceIndex] == null
-    
+
   clear: ->
     this.set('spaces', [null, null, null, null, null, null, null, null, null])
     
   lock: ->
-    $('#loading').fadeIn()
     this.set('locked', true)
     
   unlock: ->
-    $('#loading').fadeOut()
     this.set('locked', false)

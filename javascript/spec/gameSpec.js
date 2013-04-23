@@ -45,7 +45,8 @@
       };
       expect(game.get('board')).toToBeDefined;
       expect(game.get('players')).toEqual(playerList);
-      return expect(game.get('currentPlayer')).toEqual('x');
+      expect(game.get('currentPlayer')).toEqual('x');
+      return expect(game.get('finished')).toEqual(false);
     });
     it('has a default url', function() {
       return expect(game.url()).toEqual('/json');

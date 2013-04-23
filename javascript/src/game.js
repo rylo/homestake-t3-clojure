@@ -12,22 +12,6 @@
       return _ref;
     }
 
-    Game.prototype.defaults = {
-      board: new Board,
-      players: {
-        player1: {
-          type: 'human',
-          marker: 'x'
-        },
-        player2: {
-          type: 'ultimate',
-          marker: 'o'
-        }
-      },
-      currentPlayer: 'x',
-      message: "x's turn"
-    };
-
     Game.prototype.url = function() {
       return '/json';
     };
@@ -35,6 +19,20 @@
     Game.prototype.initialize = function() {
       var _this = this;
 
+      this.set('board', new Board);
+      this.set('players', {
+        player1: {
+          type: 'human',
+          marker: 'x'
+        },
+        player2: {
+          type: 'human',
+          marker: 'o'
+        }
+      });
+      this.set('message', 'x\'s turn');
+      this.set('currentPlayer', 'x');
+      this.set('finished', true);
       return this.listenTo(this.get('board'), 'change', function() {
         return _this.trigger('change');
       });
@@ -46,20 +44,21 @@
 
       url = this.url();
       dataHash = this.dataHash();
+      this.trigger('waiting');
       return $.ajax(url, {
         data: dataHash,
         error: function(jqXHR, textStatus, errorThrown) {
           return "error";
         },
         success: function(data, textStatus, jqXHR) {
-          return _this.parse(data);
+          _this.parse(data);
+          return _this.trigger('notwaiting');
         }
       });
     };
 
     Game.prototype.dataHash = function() {
       return $.extend({
-        move: this.get('currentMove'),
         marker: this.get('currentPlayer'),
         player1: this.get('players').player1.marker,
         player1type: this.get('players').player1.type,
@@ -92,7 +91,11 @@
       board.set('spaces', this.parseBoard(data.board));
       board.unlock();
       this.set('currentPlayer', data.currentPlayer);
-      return this.set('message', data.message);
+      this.set('message', data.message);
+      this.trigger('change');
+      if (this.gameIsOver()) {
+        return this.endGame();
+      }
     };
 
     Game.prototype.parseBoard = function(board_array) {
@@ -112,6 +115,29 @@
         }
         return _results;
       })();
+    };
+
+    Game.prototype.endGame = function() {
+      this.set('finished', true);
+      return this.get('board').lock();
+    };
+
+    Game.prototype.gameIsOver = function() {
+      return this.get('message').match(/wins|tie/);
+    };
+
+    Game.prototype.newGame = function() {
+      this.set('board', new Board);
+      this.set('finished', false);
+      this.set('message', "x's turn");
+      this.trigger('change');
+      if (this.computerGoesFirst()) {
+        return this.sync();
+      }
+    };
+
+    Game.prototype.computerGoesFirst = function() {
+      return this.get('players').player1.type.match(/easy|ultimate/);
     };
 
     return Game;

@@ -30,6 +30,7 @@ describe 'Game', ->
     expect( game.get('board') ).toToBeDefined
     expect( game.get('players') ).toEqual playerList
     expect( game.get('currentPlayer') ).toEqual 'x'
+    expect( game.get('finished') ).toEqual false
         
   it 'has a default url', ->
     expect(game.url()).toEqual '/json'
