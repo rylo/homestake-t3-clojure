@@ -17,8 +17,8 @@
 
     GameView.prototype.messageElement = '#message';
 
-    GameView.prototype.initialize = function() {
-      return this.model.on('change', this.render, this);
+    GameView.prototype.events = {
+      'click .space': 'makeMove'
     };
 
     GameView.prototype.render = function() {
@@ -50,18 +50,20 @@
     };
 
     GameView.prototype.makeMove = function(event) {
-      var playerMarker, spaceIndex;
+      var board, spaceIndex;
 
       spaceIndex = event.target.id;
-      playerMarker = this.model.get('currentPlayer');
-      this.model.get('board').setSpace(spaceIndex, playerMarker);
-      this.model.set('currentMove', spaceIndex);
-      this.model.sync();
-      return this.render();
+      board = this.model.get('board');
+      if (board.spaceOpen(spaceIndex) && !board.get('locked')) {
+        board.lock();
+        board.setSpace(spaceIndex, this.model.get('currentPlayer'));
+        this.model.sync();
+        return this.render();
+      }
     };
 
-    GameView.prototype.events = {
-      'click .space': 'makeMove'
+    GameView.prototype.initialize = function() {
+      return this.model.on('change', this.render, this);
     };
 
     return GameView;

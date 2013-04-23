@@ -10,7 +10,6 @@
           status: 200,
           responseText: {
             marker: "x",
-            move: "first-move",
             player1: {
               type: "human",
               marker: "x"
@@ -77,7 +76,6 @@
         6: 'null',
         7: 'null',
         8: 'null',
-        move: 'first-move',
         marker: 'x',
         player1: 'x',
         player1type: 'human',

@@ -20,8 +20,14 @@
       board.clear();
       return expect(board.get('spaces')).toEqual([null, null, null, null, null, null, null, null, null]);
     });
-    return it('checks to see if a space is open', function() {
+    it('checks to see if a space is open', function() {
       return expect(board.spaceOpen(1)).toEqual(true);
+    });
+    return it('locks/unlocks the board', function() {
+      board.lock();
+      expect(board.get('locked')).toEqual(true);
+      board.unlock();
+      return expect(board.get('locked')).toEqual(false);
     });
   });
 

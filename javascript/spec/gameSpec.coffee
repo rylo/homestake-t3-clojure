@@ -7,7 +7,6 @@ describe 'Game', ->
           status: 200,
           responseText: { 
             marker : "x", 
-            move : "first-move", 
             player1 : { type : "human", marker : "x"}, 
             player2 : { type : "human", marker : "o"}, 
             board :["nil", "nil", "nil", "nil", "nil", "nil", "nil", "nil", "nil"], 
@@ -46,7 +45,6 @@ describe 'Game', ->
   it 'returns a hash of the game\'s data', ->
     hash = { 
       0 : 'null', 1 : 'null', 2 : 'null', 3 : 'null', 4 : 'null', 5 : 'null', 6 : 'null', 7 : 'null', 8 : 'null', 
-      move : 'first-move', 
       marker : 'x', 
       player1 : 'x', 
       player1type : 'human', 

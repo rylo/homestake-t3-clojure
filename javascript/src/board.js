@@ -13,16 +13,15 @@
     }
 
     Board.prototype.defaults = {
-      spaces: [null, null, null, null, null, null, null, null, null]
+      spaces: [null, null, null, null, null, null, null, null, null],
+      locked: false
     };
 
     Board.prototype.setSpace = function(spaceIndex, playerMarker) {
       var spaces;
 
       spaces = this.get('spaces');
-      if (this.spaceOpen(spaceIndex)) {
-        spaces[spaceIndex] = playerMarker;
-      }
+      spaces[spaceIndex] = playerMarker;
       return this.set({
         spaces: spaces
       });
@@ -34,6 +33,16 @@
 
     Board.prototype.clear = function() {
       return this.set('spaces', [null, null, null, null, null, null, null, null, null]);
+    };
+
+    Board.prototype.lock = function() {
+      $('#loading').fadeIn();
+      return this.set('locked', true);
+    };
+
+    Board.prototype.unlock = function() {
+      $('#loading').fadeOut();
+      return this.set('locked', false);
     };
 
     return Board;

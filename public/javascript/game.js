@@ -12,10 +12,6 @@
       return _ref;
     }
 
-    Game.prototype.url = function() {
-      return '/json';
-    };
-
     Game.prototype.defaults = {
       board: new Board,
       players: {
@@ -24,13 +20,24 @@
           marker: 'x'
         },
         player2: {
-          type: 'human',
+          type: 'ultimate',
           marker: 'o'
         }
       },
       currentPlayer: 'x',
-      currentMove: 'first-move',
       message: "x's turn"
+    };
+
+    Game.prototype.url = function() {
+      return '/json';
+    };
+
+    Game.prototype.initialize = function() {
+      var _this = this;
+
+      return this.listenTo(this.get('board'), 'change', function() {
+        return _this.trigger('change');
+      });
     };
 
     Game.prototype.sync = function(callback) {
@@ -78,20 +85,14 @@
       return $.parseJSON("{" + hash + "}");
     };
 
-    Game.prototype.parse = function(data, callback) {
-      this.get('board').set('spaces', this.parseBoard(data.board));
+    Game.prototype.parse = function(data) {
+      var board;
+
+      board = this.get('board');
+      board.set('spaces', this.parseBoard(data.board));
+      board.unlock();
       this.set('currentPlayer', data.currentPlayer);
-      this.set('message', data.message);
-      return this.set('players', {
-        player1: {
-          marker: data.player1.marker,
-          type: data.player1.type
-        },
-        player2: {
-          marker: data.player2.marker,
-          type: data.player2.type
-        }
-      });
+      return this.set('message', data.message);
     };
 
     Game.prototype.parseBoard = function(board_array) {

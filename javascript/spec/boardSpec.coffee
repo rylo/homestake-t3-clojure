@@ -19,3 +19,9 @@ describe 'Board', ->
     
   it 'checks to see if a space is open', ->
     expect( board.spaceOpen(1) ).toEqual true
+    
+  it 'locks/unlocks the board', ->
+    board.lock()
+    expect( board.get('locked') ).toEqual true
+    board.unlock()
+    expect( board.get('locked') ).toEqual false

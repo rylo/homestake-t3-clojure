@@ -1,9 +1,7 @@
 class window.GameView extends Backbone.View
   el: '#board'
   messageElement: '#message'
-  
-  initialize: ->
-    @model.on('change', this.render, this)
+  events: 'click .space' : 'makeMove'
   
   render: ->
     $(this.el).html this.renderBoard()
@@ -17,13 +15,16 @@ class window.GameView extends Backbone.View
     
   renderMessage: ->
     "<h2>#{@model.get('message')}</h2>"
-    
+
   makeMove: (event) ->
     spaceIndex = event.target.id
-    playerMarker = @model.get('currentPlayer')
-    @model.get('board').setSpace(spaceIndex, playerMarker)
-    @model.set('currentMove', spaceIndex)
-    @model.sync()
-    this.render()
+    board = @model.get('board')
+    
+    if board.spaceOpen(spaceIndex) && !board.get('locked')
+      board.lock()
+      board.setSpace(spaceIndex, @model.get('currentPlayer'))
+      @model.sync()
+      this.render()
 
-  events: 'click .space' : 'makeMove'
+  initialize: ->
+    @model.on('change', this.render, this)

@@ -6,15 +6,15 @@ describe 'GameView', ->
       newBoard: {
         success: {
           status: 200,
-          responseText: { 
-            marker : "x", 
+          responseText: {
+            marker : "x",
             move : "first-move", 
             player1 : { type : "human", marker : "x"},
             player2 : { type : "human", marker : "o"},
             board : ["nil", "nil", "nil", "nil", "nil", "nil", "nil", "nil", "nil"], 
             message : ""
           }
-        }       
+        }
       }
     }
 
