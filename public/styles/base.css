@@ -1,17 +1,169 @@
+body {
+  background: #000;
+  background: url('/images/stars.jpg');
+}
+
+h1, h2, h3 {
+  margin: 0 0 1em 0;
+}
+
+h2 {
+  font-size: 2em;
+}
+
+h3 {
+  font-size: 1.3em;
+}
+
+.content {
+  background: #fff;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  margin: 0 auto;
+  padding: 2em 0;
+  position: absolute;
+  width: 500px;
+  font-family: 'Julius Sans One', sans-serif;
+}
+
 #board {
-  width: 306px;
+  margin: 0 auto;
+  width: 400px;
 }
 
 #board div {
   border: 1px solid #ccc;
   float: left;
-  text-align: center;
   font-size: 4em;
-  line-height: 100px;
-  height: 100px;
-  width: 100px;
+  height: 130px;
+  line-height: 130px;
+  text-align: center;
+  width: 130px;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -999;
 }
 
 #loading {
   display: none;
+  height: 128px;
+  margin: 0 auto;
+  width: 128px;
+}
+
+#message {
+  clear: both;
+  margin: 0 auto;
+  text-align: center;
+  width: 80%;
+}
+
+/* CONFIGURATION PANEL */
+
+#config {
+  clear: both;
+  margin: 0 auto;
+  padding-top: 2em;
+  width: 80%;
+}
+
+.column {
+  width: 50%;
+  float: left;
+}
+
+.type label {
+  display: inline-block;
+  line-height: 1.8em;
+  vertical-align: top;
+}
+
+label input {
+  margin-right: 0.5em;
+}
+
+.new-game {
+  width: 89%;
+}
+
+.button {
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #fff), color-stop(100%, #f0f0f0));
+  background: -webkit-linear-gradient(#fff, #f0f0f0);
+  background: -moz-linear-gradient(#fff, #f0f0f0);
+  background: -o-linear-gradient(#fff, #f0f0f0);
+  background: linear-gradient(#fff,#f0f0f0);
+  background-color: #f0f0f0;
+  border: 1px solid #cbcbcb;
+  border-bottom-color: #bebebe;
+  border-top-color: #d1d1d1;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  color: #666;
+  cursor: pointer;
+  display: inline-block;
+  padding: 0.5em 1.25em;
+  text-align: center;
+  text-decoration: none;
+  text-shadow: 0 2px white;
+  text-transform: uppercase;
+  white-space: nowrap;
+  font-style: normal;
+  font-weight: 500;
+  -webkit-box-shadow: 0 1px 3px rgba(64,56,41,0.2);
+  -moz-box-shadow: 0 1px 3px rgba(64,56,41,0.2);
+  box-shadow: 0 1px 3px rgba(64,56,41,0.2);
+}
+
+.button:hover {
+  background: -webkit-linear-gradient(#fff, #F8F8F8);
+  background: -moz-linear-gradient(#fff, #F8F8F8);
+  background: -o-linear-gradient(#fff, #F8f8F8);
+  background: linear-gradient(#fff, #F8F8F8);
+}
+
+.button:active {
+  background: -webkit-linear-gradient(#f0f0f0, #fff);
+  background: -moz-linear-gradient(#f0f0f0, #fff);
+  background: -o-linear-gradient(#f0f0f0, #fff);
+  background: linear-gradient(#f0f0f0, #fff);
+  background-color: #fff;
+}
+
+/* CUSTOM RADIO BUTTONS */
+
+.regular-checkbox {
+    -webkit-appearance: none;
+    background-color: #fafafa;
+    border: 1px solid #cacece;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+    padding: 9px;
+    border-radius: 3px;
+    display: inline-block;
+    position: relative;
+}
+
+.regular-checkbox:active, .regular-checkbox:checked:active {
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+}
+ 
+.regular-checkbox:checked {
+    background-color: #e9ecee;
+    border: 1px solid #adb8c0;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
+    color: #99a1a7;
+}
+
+.regular-checkbox:checked:after {
+    content: '\2605';
+    font-size: 13px;
+    position: absolute;
+    top: 0px;
+    left: 3px;
+    color: #99a1a7;
 }

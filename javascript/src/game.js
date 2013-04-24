@@ -30,7 +30,7 @@
           marker: 'o'
         }
       });
-      this.set('message', 'x\'s turn');
+      this.set('message', 'New Game');
       this.set('currentPlayer', 'x');
       this.set('finished', true);
       return this.listenTo(this.get('board'), 'change', function() {

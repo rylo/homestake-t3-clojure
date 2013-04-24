@@ -5,7 +5,7 @@ class window.Game extends Backbone.Model
   initialize: ->
     this.set('board', new Board)
     this.set('players', { player1: {type: 'human', marker: 'x'}, player2: {type: 'human', marker: 'o'} })
-    this.set('message', 'x\'s turn')
+    this.set('message', 'New Game')
     this.set('currentPlayer', 'x')
     this.set('finished', true)
 

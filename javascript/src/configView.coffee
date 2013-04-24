@@ -9,8 +9,9 @@ class window.ConfigView extends Backbone.View
     this.render()
   
   updateConfiguration: (event) =>
-    player = event.target.parentElement.parentElement.className
+    player = event.target.parentElement.parentElement.parentElement.id
     type = event.target.value
+    console.log "#{player} #{type}"
     if player == 'player1'
       @model.get('players').player1.type = type
     else
@@ -19,26 +20,19 @@ class window.ConfigView extends Backbone.View
   render: ->
     if @model.get('finished')
       data = @model.get('players')
-      html = "New Game
-      <div class='player1'>
-        Player 1 <br />
-        #{this.renderOptions(data.player1.type, data.player1.marker)}
-      </div>
-  
-      <div class='player2'>
-        Player 2 <br />
-        #{this.renderOptions(data.player2.type, data.player2.marker)}
-      </div>
-      <div class='new-game'>Start</div>"
+      html = "
+      <div class='column' id='player1'>#{this.renderPlayerOptions(data.player1.type, data.player1.marker)}</div>
+      <div class='column' id='player2'>#{this.renderPlayerOptions(data.player2.type, data.player2.marker)}</div>
+      <div class='new-game button'>Start</div>"
       $(this.el).html html
       
-  renderOptions: (playerType, marker) ->
-    "<span class='player2marker'>#{marker}</span><br />
-    <form class='type'>
-      <input type='radio' name='type' value='human'#{this.isChecked(playerType, 'human')}>Human</input>
-      <input type='radio' name='type' value='easy'#{this.isChecked(playerType, 'easy')}>Easy AI</input>
-      <input type='radio' name='type' value='ultimate'#{this.isChecked(playerType, 'ultimate')}>Ultimate AI</input>
-    </form>"
+  renderPlayerOptions: (playerType, marker) ->
+    "<h3>Player <span class='marker'>#{marker}</span></h3>
+      <form class='type'>
+        <label><input class='regular-checkbox' type='radio' name='type' value='human'#{this.isChecked(playerType, 'human')}>Human</label><br />
+        <label><input class='regular-checkbox' type='radio' name='type' value='easy'#{this.isChecked(playerType, 'easy')}>Easy AI</label><br />
+        <label><input class='regular-checkbox' type='radio' name='type' value='ultimate'#{this.isChecked(playerType, 'ultimate')}>Ultimate AI</label><br />
+      </form>"
     
   isChecked: (playerType, checkboxType) ->
     if playerType == checkboxType

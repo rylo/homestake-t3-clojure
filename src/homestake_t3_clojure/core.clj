@@ -12,4 +12,5 @@
       homestake
         (.registerRoute "/json/" (HomestakeWrapper.))
         (.registerRoute "/" (FileResponse. "/Users/rylan/Documents/Apprenticeship/homestake-t3-clojure/public/" "game.html"))
+        (.registerRoute "/test/" (FileResponse. "/Users/rylan/Documents/Apprenticeship/homestake-t3-clojure/public/" "test.html"))
         (.startServer))))
