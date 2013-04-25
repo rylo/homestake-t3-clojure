@@ -36,6 +36,6 @@ describe 'GameView', ->
     expect( Game.render ).toHaveBeenCalled
     
   it 'renders a game message', ->
-    expect( gameView.renderMessage() ).toEqual '<h2>x\'s turn</h2>'
+    expect( gameView.renderMessage() ).toEqual '<h2>New Game</h2>'
     game.set('message', 'o hai dere')
     expect( gameView.renderMessage() ).toEqual '<h2>o hai dere</h2>'

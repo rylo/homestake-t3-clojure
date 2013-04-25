@@ -51,7 +51,7 @@
       return expect(Game.render).toHaveBeenCalled;
     });
     return it('renders a game message', function() {
-      expect(gameView.renderMessage()).toEqual('<h2>x\'s turn</h2>');
+      expect(gameView.renderMessage()).toEqual('<h2>New Game</h2>');
       game.set('message', 'o hai dere');
       return expect(gameView.renderMessage()).toEqual('<h2>o hai dere</h2>');
     });

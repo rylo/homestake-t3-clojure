@@ -123,7 +123,7 @@
     };
 
     Game.prototype.gameIsOver = function() {
-      return this.get('message').match(/wins|tie/);
+      return this.get('message').match(/wins|tie/) !== null;
     };
 
     Game.prototype.newGame = function() {
@@ -137,7 +137,7 @@
     };
 
     Game.prototype.computerGoesFirst = function() {
-      return this.get('players').player1.type.match(/easy|ultimate/);
+      return this.get('players').player1.type.match(/easy|ultimate/) !== null;
     };
 
     return Game;

@@ -14,8 +14,37 @@
     it('instantiates a ConfigView', function() {
       return expect(configView).not.toBe(null);
     });
-    return it('has two events', function() {
-      return expect(configView.events).toEqual(2);
+    it('renders a player\'s configuration options', function() {
+      expect(configView.renderPlayerOptions('easy', 'x')).toContain("<span class='marker'>x</span>");
+      return expect(configView.renderPlayerOptions('easy', 'x')).toContain("value='easy' checked='checked'>");
+    });
+    it('updates the game\'s configuration', function() {
+      var mockEvent;
+
+      mockEvent = {
+        target: {
+          value: 'easy',
+          parentElement: {
+            parentElement: {
+              parentElement: {
+                id: 'player1'
+              }
+            }
+          }
+        }
+      };
+      expect(configView.model.get('players').player1.type).toEqual("human");
+      configView.updateConfiguration(mockEvent);
+      expect(configView.model.get('players').player1.type).toEqual("easy");
+      return expect(configView.model.get('players').player2.type).not.toEqual("easy");
+    });
+    return it('creates a new game and unlocks the board', function() {
+      var spy;
+
+      spy = spyOn(game, 'newGame');
+      configView.newGame();
+      expect(configView.model.get('board').get('locked')).toEqual(false);
+      return expect(spy).toHaveBeenCalled();
     });
   });
 

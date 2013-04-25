@@ -11,10 +11,9 @@ class window.ConfigView extends Backbone.View
   updateConfiguration: (event) =>
     player = event.target.parentElement.parentElement.parentElement.id
     type = event.target.value
-    console.log "#{player} #{type}"
     if player == 'player1'
       @model.get('players').player1.type = type
-    else
+    else if player == 'player2'
       @model.get('players').player2.type = type
 
   render: ->
@@ -35,9 +34,11 @@ class window.ConfigView extends Backbone.View
       </form>"
     
   isChecked: (playerType, checkboxType) ->
-    if playerType == checkboxType
-      " checked='checked'"
-      
+     if playerType == checkboxType 
+       " checked='checked'"
+     else
+       ""
+
   newGame: ->
     @model.newGame()
     @model.get('board').unlock()

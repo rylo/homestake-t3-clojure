@@ -46,7 +46,7 @@
       expect(game.get('board')).toToBeDefined;
       expect(game.get('players')).toEqual(playerList);
       expect(game.get('currentPlayer')).toEqual('x');
-      return expect(game.get('finished')).toEqual(false);
+      return expect(game.get('finished')).toEqual(true);
     });
     it('has a default url', function() {
       return expect(game.url()).toEqual('/json');
@@ -85,7 +85,7 @@
       };
       return expect(game.dataHash()).toEqual(hash);
     });
-    return it('returns a hash representation of the board', function() {
+    it('returns a hash representation of the board', function() {
       return expect(game.boardHash()).toEqual({
         0: 'null',
         1: 'null',
@@ -97,6 +97,23 @@
         7: 'null',
         8: 'null'
       });
+    });
+    it('ends a game', function() {
+      game.endGame();
+      expect(game.get('board').get('locked')).toEqual(true);
+      return expect(game.get('finished')).toEqual(true);
+    });
+    it('returns true if the game is over according to the game\'s current message', function() {
+      expect(game.gameIsOver()).toEqual(false);
+      game.set('message', 'wins');
+      expect(game.gameIsOver()).toEqual(true);
+      game.set('message', 'tie');
+      return expect(game.gameIsOver()).toEqual(true);
+    });
+    return it('returns true if player1 is a computer', function() {
+      expect(game.computerGoesFirst()).toEqual(false);
+      game.get('players').player1.type = 'easy';
+      return expect(game.computerGoesFirst()).toEqual(true);
     });
   });
 

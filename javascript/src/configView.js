@@ -29,10 +29,9 @@
 
       player = event.target.parentElement.parentElement.parentElement.id;
       type = event.target.value;
-      console.log("" + player + " " + type);
       if (player === 'player1') {
         return this.model.get('players').player1.type = type;
-      } else {
+      } else if (player === 'player2') {
         return this.model.get('players').player2.type = type;
       }
     };
@@ -54,6 +53,8 @@
     ConfigView.prototype.isChecked = function(playerType, checkboxType) {
       if (playerType === checkboxType) {
         return " checked='checked'";
+      } else {
+        return "";
       }
     };
 

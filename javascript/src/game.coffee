@@ -25,9 +25,9 @@ class window.Game extends Backbone.Model
   dataHash: ->
     $.extend {
       marker: this.get('currentPlayer'),
-      player1 : this.get('players').player1.marker, 
-      player1type: this.get('players').player1.type, 
-      player2 : this.get('players').player2.marker, 
+      player1 : this.get('players').player1.marker,
+      player1type: this.get('players').player1.type,
+      player2 : this.get('players').player2.marker,
       player2type: this.get('players').player2.type
     }, this.boardHash()
 
@@ -55,7 +55,7 @@ class window.Game extends Backbone.Model
     this.get('board').lock()
       
   gameIsOver: ->
-    this.get('message').match(/wins|tie/)
+    this.get('message').match(/wins|tie/) != null
     
   newGame: ->
     this.set('board', new Board)
@@ -65,4 +65,4 @@ class window.Game extends Backbone.Model
     this.sync() if this.computerGoesFirst()
       
   computerGoesFirst: ->
-    this.get('players').player1.type.match(/easy|ultimate/)
+    this.get('players').player1.type.match(/easy|ultimate/) != null
