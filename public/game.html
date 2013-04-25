@@ -26,19 +26,17 @@
         configView.render();
         view = new GameView({ model : game });
         view.render();
-        
-        var spaceView = new SpaceView();
-        spaceView.render();
-        
-        
         $(window).resize(function(){
-
+        
          $('.content').css({
           left: ($(window).width() - $('.content').outerWidth()) / 2,
           top: ($(window).height() - $('.content').outerHeight()) / 2
          });
-		
+            
         });
+        
+        var spaceView = new SpaceView();
+        spaceView.render();
  
         // To initially run the function:
         $(window).resize();

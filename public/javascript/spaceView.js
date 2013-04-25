@@ -4,12 +4,15 @@
 
   window.Planet = (function() {
     function Planet() {
-      var texture;
+      var bumpMap, texture;
 
       this.sphere = new THREE.SphereGeometry(60, 200, 200);
       texture = new THREE.ImageUtils.loadTexture('/images/earth.jpg');
-      this.material = new THREE.MeshLambertMaterial({
-        map: texture
+      bumpMap = new THREE.ImageUtils.loadTexture('/images/earth_bumpmap.jpg');
+      this.material = new THREE.MeshPhongMaterial({
+        map: texture,
+        bumpMap: bumpMap,
+        bumpScale: 2
       });
       return new THREE.Mesh(this.sphere, this.material);
     }
@@ -18,16 +21,43 @@
 
   })();
 
+  window.Luna = (function() {
+    function Luna() {
+      var bumpMap;
+
+      this.sphere = new THREE.SphereGeometry(40, 30, 30);
+      this.texture = new THREE.ImageUtils.loadTexture('/images/moon.jpg');
+      bumpMap = new THREE.ImageUtils.loadTexture('/images/moon_bumpmap.jpg');
+      this.material = new THREE.MeshLambertMaterial({
+        map: this.texture,
+        castShadow: false,
+        receiveShadow: true,
+        bumpMap: bumpMap,
+        bumpScale: 5
+      });
+      this.moon = new THREE.Mesh(this.sphere, this.material);
+      this.moon.position.z = -200;
+      this.moon.position.x = 200;
+      return this.moon;
+    }
+
+    return Luna;
+
+  })();
+
   window.Clouds = (function() {
     function Clouds() {
-      var texture;
+      var bumpMap, texture;
 
-      this.sphere = new THREE.SphereGeometry(60.1, 200, 200);
+      this.sphere = new THREE.SphereGeometry(60.5, 200, 200);
       texture = new THREE.ImageUtils.loadTexture('/images/clouds.png');
+      bumpMap = new THREE.ImageUtils.loadTexture('/images/clouds.png');
       this.material = new THREE.MeshLambertMaterial({
         map: texture,
         transparent: true,
-        castShadow: true
+        castShadow: true,
+        bumpMap: bumpMap,
+        bumpScale: 5
       });
       return new THREE.Mesh(this.sphere, this.material);
     }
@@ -42,17 +72,19 @@
       this.render = __bind(this.render, this);
       this.prepareDOM = __bind(this.prepareDOM, this);
       this.prepareScene = __bind(this.prepareScene, this);      this.scene = new THREE.Scene;
-      this.camera = this.setupCamera();
       this.planet = new Planet;
+      this.luna = new Luna;
       this.clouds = new Clouds;
       this.renderer = new THREE.WebGLRenderer;
-      this.prepareScene();
+      this.camera = this.setupCamera();
       this.prepareDOM();
+      this.prepareScene();
     }
 
     SpaceView.prototype.prepareScene = function() {
       this.scene.add(this.sunlight());
       this.scene.add(this.planet);
+      this.scene.add(this.luna);
       return this.scene.add(this.clouds);
     };
 
@@ -70,25 +102,49 @@
       });
       this.planet.rotation.y += 0.0002;
       this.clouds.rotation.y += 0.00025;
+      this.animateLuna();
       this.renderer.render(this.scene, this.camera);
       return requestAnimationFrame(callback);
+    };
+
+    SpaceView.prototype.animateCamera = function() {
+      var theta, x, z;
+
+      theta = 0.01;
+      x = this.camera.position.x;
+      z = this.camera.position.z;
+      this.camera.position.x = x * Math.cos(theta) + z * Math.sin(theta);
+      this.camera.position.z = z * Math.cos(theta) - x * Math.sin(theta);
+      return this.camera.lookAt(this.planet.position);
+    };
+
+    SpaceView.prototype.animateLuna = function() {
+      var theta, x, z;
+
+      this.luna.rotation.y += 0.002;
+      theta = 0.002;
+      x = this.luna.position.x;
+      z = this.luna.position.z;
+      this.luna.position.x = x * Math.cos(theta) + z * Math.sin(theta);
+      return this.luna.position.z = z * Math.cos(theta) - x * Math.sin(theta);
     };
 
     SpaceView.prototype.setupCamera = function() {
       var camera;
 
       camera = new THREE.PerspectiveCamera(75, $(window).innerWidth() / $(window).innerHeight(), 1, 1000);
-      camera.position.z = 90;
-      camera.position.x = 15;
-      camera.position.y = 15;
+      camera.position.z = 80;
+      camera.position.y = 100;
+      camera.lookAt(this.planet.position);
+      camera.position.x = 80;
       return camera;
     };
 
     SpaceView.prototype.sunlight = function() {
       var directionalLight;
 
-      directionalLight = new THREE.DirectionalLight(0xfff5ec, 2, 20);
-      directionalLight.position.set(-30, -20, 30).normalize();
+      directionalLight = new THREE.DirectionalLight(0xffffff, 1, 2);
+      directionalLight.position.set(100, 0, 100).normalize();
       directionalLight.target = this.planet;
       directionalLight.showCascade = true;
       return directionalLight;
